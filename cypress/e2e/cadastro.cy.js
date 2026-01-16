@@ -62,15 +62,18 @@ describe('Funcionalidade: Cadastro no hub de leitura', () => {
         cy.get(':nth-child(5) > .invalid-feedback').should('contain', 'Senhas não coincidem')
     });
 
-    it.only('Deve validar mensagem de erro todos os campos vazios', () => {
+    it('Deve validar mensagem de erro todos os campos vazios', () => {
         cy.get('#name').clear()
         cy.get('#email').clear()
         cy.get('#phone').clear()
         cy.get('#password').clear()
         cy.get('#confirm-password').clear()
-        cy.get('#terms-agreement').check()
+        //cy.get('#terms-agreement').check()
         cy.get('#register-btn').click()
         //Resultado esperado
+        cy.get('#register-form > :nth-child(2) > .invalid-feedback').should('contain', 'Email válido é obrigatório')
+        cy.get(':nth-child(1) > .invalid-feedback').should('contain', 'Nome deve ter pelo menos 2 caracteres')
+        cy.get('#password').should('have.class', 'is-invalid')
         cy.get('#terms-agreement').should('have.class', 'is-invalid')
         cy.get('.invalid-feedback').should('be.visible').and('contain', 'aceitar os termos')
     });
